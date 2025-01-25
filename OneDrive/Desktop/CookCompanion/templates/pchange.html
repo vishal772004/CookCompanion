@@ -1,0 +1,32 @@
+{% extends "layout.html"%}
+
+{% block main%}
+<div class="card mx-auto my-auto mb-5" style="width:59rem; background: #00dbff; opacity:1;">
+    <div class="card-body shadow-lg p-3">
+
+        <h1 class=" text-center dancing-script-fontName mx-auto mb-5">Username:   {{user[0].username}}</h1>
+        <div class=" row dropdown mb-5">
+            <button class=" btn btn-info col-3 mx-auto  dropdown-toggle dancing-script-fontName" type="button" data-bs-toggle="collapse"data-bs-target="#collapseExample3"aria-expanded="false"
+             aria-controls="collapseExample3">
+                Click To Change Password
+            </button>
+            <div class="row collapse" id="collapseExample3">
+                <form action="\password" method="post">
+                    <div class="mb-3 my-3">
+                        <input autocomplete="off" autofocus class="form-control mx-auto w-auto dancing-script-fontName" name="username" placeholder="Type Username for confirming" type="text" required>
+                    </div>
+                    <div class="mb-3">
+                        <input autocomplete="off" autofocus class="form-control mx-auto w-auto dancing-script-fontName" name="password" placeholder="New Password" type="password" required>
+                    </div>
+                    <div class="mb-5">
+                        <input autocomplete="off" autofocus class="form-control mx-auto w-auto dancing-script-fontName" name="confirmation" placeholder="Confirm Password" type="password" required>
+                    </div>
+                    <div class="row">
+                        <button class="btn btn-info dancing-script-fontName mx-auto w-auto" type="submit">Change Password</button>
+                    </div>
+                </form>
+            </div>
+            </div>
+    </div>
+</div>
+{% endblock%}

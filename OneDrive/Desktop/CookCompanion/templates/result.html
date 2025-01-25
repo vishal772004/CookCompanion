@@ -1,0 +1,94 @@
+{% extends "layout.html" %}
+{%block main%}
+<h2 class="ms-auto mb-3 dancing-script-fontName text-center">Recipes that match your requirements:</h2>
+<div class="container mt-4">
+    <div class="row">
+        {% if recipe%}
+            {% for ingredients in recipe %}
+
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <img src="{{ingredients['image']}}" class="card-img-top" alt="Card Image">
+                            <div class="card-body">
+                                <h3 class="card-title dancing-script-fontName">{{ingredients['title']}}</h3>
+                                <p class="card-text dancing-script-fontName">Ready in {{ingredients['readyInMinutes']}} minutes:<br>
+
+                                    <div class="dropdown mb-3">
+                                        <button
+                                            class=" card-title btn  col-3  mx-auto dropdown-toggle dancing-script-fontName"
+                                            type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#collapseExample{{loop.index0}}"
+                                            aria-expanded="false"
+                                            aria-controls="collapseExample2">
+                                            Ingredients
+                                        </button>
+                                        <div class="row collapse" id="collapseExample{{loop.index0}}">
+                                            <ul>
+                                            {% for item in items[ingredients['id']] %}
+                                                <li class="card-text dancing-script-fontName">{{ item }}</li>
+                                            {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                            </p>
+                            </div>
+                        <div class="card-footer">
+                            <a href="{{ingredients['sourceUrl']}}" class="btn btn-info dancing-script-fontName">Get Full Recipe</a>
+                        </div>
+                        <div class="card-footer">
+                            <button
+                                class="btn btn-info dancing-script-fontName save-recipe-btn"
+                                data-id="{{ ingredients['id'] }}"
+                                data-title="{{ ingredients['title'] }}">
+                                Save!!
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {%else%}
+                <h3>No Recipes found</h3>
+        {%endif%}
+    </div>
+</div>
+{%endblock%}
+{% block script%}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const saveButtons = document.querySelectorAll('.save-recipe-btn');
+
+        saveButtons.forEach(button => {
+            button.addEventListener('click', async () => {
+                const recipeId = button.getAttribute('data-id');
+                const recipeTitle = button.getAttribute('data-title');
+
+                try {
+                    const response = await fetch("/saverecipe", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ id: recipeId, title: recipeTitle })
+                    });
+                    console.log("Recipe ID:", recipeId);
+                    console.log("Recipe Title:", recipeTitle);
+                    if (!response.ok) {
+                        // Log error and response details
+                        const errorData = await response.json();
+                        console.error("Error response:", errorData);
+                        alert(`Error: ${errorData.message}`);
+                        return;
+                    }
+                    const result = await response.json();
+                    console.log(response)
+                    alert('Recipe saved successfully!');
+                } catch (error) {
+                    console.error(error);
+                    alert('An error occurred.');
+                }
+            });
+        });
+    });
+</script>
+{% endblock%}

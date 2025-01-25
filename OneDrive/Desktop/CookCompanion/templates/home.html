@@ -1,0 +1,211 @@
+{% extends "layout.html" %}
+{% block main%}
+<h1 class="fs-1 h1 text-center dancing-script-fontName"  >
+    Lets Start Cooking!!
+</h1>
+<div class="container">
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <div class="card mx-auto my-auto" style="width:59rem; background: #00dbff; opacity:1;">
+                <div class="card-body shadow-lg p-3">
+                    <form action="/result" method="POST" autocomplete="off">
+                    <div class="form ">
+                            <label for="ingredients" class="px-0 py-0 form-control-lg fw-semibold mb-2 dancing-script-fontName" id="ingredient">Enter the ingredients</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" id = "ingredient-0"  name="ingredient[]" class="form-control w-90" autofocus="on"  />
+                                    <button class="btn btn-outline-primary dancing-script-fontName" id="addI_btn" type="button" >Add</button>
+                                </div>
+                                <div id="input-container"></div>
+                                <div class="row mb-3">
+                                    <label for="dish_type" class="mx-auto form-control-lg fw-semibold mb-3 dancing-script-fontName">Dish Type (optional)</label>
+                                    <div class="col-3">
+                                        <input class="form-check-input"value="Main Course" type="checkbox" name="dish_type" id="dish_type">
+                                        <label class="form-check-label dancing-script-fontName" for="dish_type">
+                                            Main Course
+                                        </label>
+                                    </div>
+                                    <div class="col-3">
+                                        <input class="form-check-input"  value="Side Dish" type="checkbox" name="dish_type" id="dish_type">
+                                        <label class="form-check-label dancing-script-fontName" for="dish_type">
+                                            Side Dish
+                                        </label>
+                                    </div>
+                                    <div class="col-3">
+                                        <input class="form-check-input" value="Dessert" type="checkbox" name="dish_type" id="dish_type">
+                                        <label class="form-check-label dancing-script-fontName" for="dish_type">
+                                            Dessert
+                                        </label>
+                                    </div>
+                                    <div class="col-3">
+                                        <input class="form-check-input" type="checkbox" value="Drinks"name="dish_type" id="dish_type">
+                                        <label class="form-check-label dancing-script-fontName" for="dish_type">
+                                            Drinks
+                                        </label>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="row mx-auto dropdown mb-5">
+                                        <button class="btn btn-info col-3 mx-auto dropdown-toggle dancing-script-fontName" type="button" data-bs-toggle="collapse"data-bs-target="#collapseExample3"aria-expanded="false"
+                                         aria-controls="collapseExample3">
+                                            Diet Labels(optional)
+                                        </button>
+                                        <div class="row collapse" id="collapseExample3">
+                                            {% for dietlabel in dietlabels %}
+                                            <div class="col-3">
+                                                <div class="form-check">
+                                                    <input
+                                                        id="dietlabel_{{ loop.index }}"
+                                                        name="dietlabels"
+                                                        type="checkbox"
+                                                        value="{{ dietlabel }}"
+                                                        class="form-check-input mb-3"
+                                                    />
+                                                    <label
+                                                        class="form-check-label dancing-script-fontName"
+                                                        for="dietlabel_{{ loop.index }}">
+                                                        {{ dietlabel }}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row mx-auto dropdown mb-5">
+                                    <button class="btn btn-info col-3 mx-auto dropdown-toggle dancing-script-fontName" type="button" data-bs-toggle="collapse"data-bs-target="#collapseExample"aria-expanded="false"
+                                     aria-controls="collapseExample">
+                                    Allergies/Restrictions(optional)
+                                    </button>
+                                    <div class="row collapse" id="collapseExample">
+                                        {% for allergy in allergies %}
+                                        <div class="col-3">
+                                            <div class="form-check">
+                                                <input
+                                                    id="allergy_{{ loop.index }}"
+                                                    name="allergies"
+                                                    value="{{ allergy }}"
+                                                    type="checkbox"
+                                                    class="form-check-input mb-3"
+                                                />
+                                                <label
+                                                    class="form-check-label dancing-script-fontName"
+                                                    for="allergy_{{ loop.index }}">
+                                                    {{ allergy }}
+                                                </label>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+
+                                </div>
+                                <div class="row mx-auto dropdown mb-5">
+                                    <button
+                                        class="btn btn-info col-3  mx-auto dropdown-toggle dancing-script-fontName"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#collapseExample2"
+                                        aria-expanded="false"
+                                        aria-controls="collapseExample2">
+                                        Cuisines (optional)
+                                    </button>
+                                    <div class="row collapse" id="collapseExample2">
+                                        {% for cuisine in cuisines %}
+                                        <div class="col-3">
+                                            <div class="form-check">
+                                                <input
+                                                    id="cuisines_{{ loop.index }}"
+                                                    name="cuisines"
+                                                    value="{{ cuisine }}"
+                                                    type="checkbox"
+                                                    class="form-check-input mb-3"
+                                                />
+                                                <label
+                                                    class="form-check-label dancing-script-fontName"
+                                                    for="cuisines_{{ loop.index }}">
+                                                    {{ cuisine }}
+                                                </label>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+
+                                    <div class="row mx-auto mt-3">
+                                    <button class="btn btn-info col-3  mx-auto dancing-script-fontName" id="submit" type="submit">Show Recipes</button>
+                                </div>
+                            </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock%}
+
+{% block script%}
+<script>
+    let ingredientIndexes = [];
+    const btn_i = document.getElementById("addI_btn");
+    const inputContainer = document.getElementById("input-container");
+    ingredientIndexes.push(document.getElementById("ingredient"))
+    const buttonArray = [];
+    buttonArray.push(document.getElementById("addI_btn"));
+
+    btn_i.addEventListener("click", handleAddInput);
+
+    function handleAddInput() {
+
+        const existingAddButton = buttonArray[buttonArray.length - 1];
+        if (existingAddButton) {
+            existingAddButton.innerHTML = "Remove";
+            existingAddButton.className = "btn btn-outline-danger remove-btn dancing-script-fontName";
+            existingAddButton.removeEventListener("click", handleAddInput);
+            existingAddButton.addEventListener("click", removeInputHandler);
+        }
+
+
+        createNewInputGroup();
+    }
+
+    function createNewInputGroup() {
+        const wrapper = document.createElement("div");
+        wrapper.className = "input-group mb-3";
+
+        const newInput = document.createElement("input");
+        const newIndex = ingredientIndexes.length + 1;
+        ingredientIndexes.push(newIndex);
+        newInput.type = "text";
+        newInput.className = "form-control w-90";
+        newInput.id ='ingredient-${newIndex}'
+        newInput.name =  "ingredient[]"
+
+        const newAddButton = document.createElement("button");
+        newAddButton.type = "button";
+        newAddButton.className = "btn btn-outline-primary add-btn dancing-script-fontName";
+        newAddButton.innerHTML = "Add";
+        newAddButton.addEventListener("click", handleAddInput);
+
+        buttonArray.push(newAddButton);
+
+        wrapper.appendChild(newInput);
+        wrapper.appendChild(newAddButton);
+        inputContainer.appendChild(wrapper);
+    }
+
+    function removeInputHandler(event) {
+        const wrapper = event.target.parentElement;
+        const button = event.target;
+        const input = wrapper.querySelector("input");
+        ingredientIndexes = ingredientIndexes.filter(i => `ingredient-${i}` !== input.id);
+
+        const index = buttonArray.indexOf(button);
+        if (index !== -1) {
+            buttonArray.splice(index, 1);
+        }
+        wrapper.remove();
+    }
+</script>
+{% endblock%}
